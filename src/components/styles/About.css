@@ -69,3 +69,30 @@
     line-height: 2.7rem;
   }
 }
+
+/* ===== TABLET (max 768px) ===== */
+@media only screen and (max-width: 768px) {
+  .about-me {
+    padding: 60px 0;
+  }
+  .about-me h3 {
+    font-size: 18px;
+    letter-spacing: 4px;
+  }
+  .about-me p {
+    font-size: 22px;
+    line-height: 28px;
+  }
+}
+
+/* ===== PHONE (max 480px) ===== */
+@media only screen and (max-width: 480px) {
+  .about-me h3 {
+    font-size: 14px;
+    letter-spacing: 3px;
+  }
+  .about-me p {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}

@@ -39,6 +39,25 @@ const Navbar = () => {
       ScrollSmoother.refresh(true);
     });
   }, []);
+
+  const toggleMenu = () => {
+    const nav = document.querySelector(".header ul");
+    const hamburger = document.querySelector(".hamburger");
+    const overlay = document.querySelector(".nav-overlay");
+    nav?.classList.toggle("nav-open");
+    hamburger?.classList.toggle("open");
+    overlay?.classList.toggle("active");
+  };
+
+  const closeMenu = () => {
+    const nav = document.querySelector(".header ul");
+    const hamburger = document.querySelector(".hamburger");
+    const overlay = document.querySelector(".nav-overlay");
+    nav?.classList.remove("nav-open");
+    hamburger?.classList.remove("open");
+    overlay?.classList.remove("active");
+  };
+
   return (
     <>
       <div className="header">
@@ -54,22 +73,32 @@ const Navbar = () => {
         </a>
         <ul>
           <li>
-            <a data-href="#about" href="#about">
+            <a data-href="#about" href="#about" onClick={closeMenu}>
               <HoverLinks text="ABOUT" />
             </a>
           </li>
           <li>
-            <a data-href="#work" href="#work">
+            <a data-href="#work" href="#work" onClick={closeMenu}>
               <HoverLinks text="WORK" />
             </a>
           </li>
           <li>
-            <a data-href="#contact" href="#contact">
+            <a data-href="#contact" href="#contact" onClick={closeMenu}>
               <HoverLinks text="CONTACT" />
             </a>
           </li>
         </ul>
+
+        {/* Hamburger button — visible on mobile only */}
+        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
+
+      {/* Overlay for mobile menu */}
+      <div className="nav-overlay" onClick={closeMenu}></div>
 
       <div className="landing-circle1"></div>
       <div className="landing-circle2"></div>

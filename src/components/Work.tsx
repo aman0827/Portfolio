@@ -8,6 +8,9 @@ gsap.registerPlugin(useGSAP);
 
 const Work = () => {
   useGSAP(() => {
+  // Disable horizontal scroll on mobile/tablet (cards stack vertically via CSS)
+  if (window.innerWidth <= 900) return;
+
   let translateX: number = 0;
 
   function setTranslateX() {
@@ -28,7 +31,7 @@ const Work = () => {
     scrollTrigger: {
       trigger: ".work-section",
       start: "top top",
-      end: `+=${translateX}`, // Use actual scroll width
+      end: `+=${translateX}`,
       scrub: true,
       pin: true,
       id: "work",
@@ -40,7 +43,6 @@ const Work = () => {
     ease: "none",
   });
 
-  // Clean up (optional, good practice)
   return () => {
     timeline.kill();
     ScrollTrigger.getById("work")?.kill();

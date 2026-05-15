@@ -90,3 +90,23 @@ a.contact-social {
     width: calc(100% - 25px);
   }
 }
+
+/* ===== PHONE (max 550px) ===== */
+@media only screen and (max-width: 550px) {
+  .contact-section h3 {
+    font-size: 28px;
+  }
+  .contact-box h2 {
+    font-size: 15px;
+  }
+  a.contact-social {
+    font-size: 18px;
+  }
+  .contact-box h5 {
+    font-size: 16px;
+  }
+  .contact-section {
+    margin-top: 30px;
+    padding-bottom: 80px;
+  }
+}
