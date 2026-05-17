@@ -119,6 +119,10 @@ export function setCharTimeline(
         .to(character.rotation, { x: -0.04, duration: 2, delay: 1 }, 0);
     }
   } else {
+    // Mobile: ensure About section is always visible (desktop fromTo starts at y:-50% which bleeds)
+    gsap.set(".about-me", { y: "0%", clearProps: "y" });
+    gsap.set(".about-section", { opacity: 1, y: "0%", clearProps: "opacity,y" });
+
     if (character) {
       const tM2 = gsap.timeline({
         scrollTrigger: {

@@ -72,8 +72,14 @@
 
 /* ===== TABLET (max 768px) ===== */
 @media only screen and (max-width: 768px) {
+  .about-section {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
   .about-me {
     padding: 60px 0;
+    transform: none !important;
   }
   .about-me h3 {
     font-size: 18px;
@@ -87,6 +93,16 @@
 
 /* ===== PHONE (max 480px) ===== */
 @media only screen and (max-width: 480px) {
+  .about-section {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  .about-me {
+    transform: none !important;
+    opacity: 1 !important;
+    padding: 50px 0 40px;
+  }
   .about-me h3 {
     font-size: 14px;
     letter-spacing: 3px;
