@@ -12,7 +12,53 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 export default function setSplitText() {
   ScrollTrigger.config({ ignoreMobileResize: true });
-  if (window.innerWidth < 900) return;
+
+  const isMobile = window.innerWidth < 900;
+
+  if (isMobile) {
+    // Mobile: simple fade-in scroll animations without SplitText
+    const paras = document.querySelectorAll(".para");
+    const titles = document.querySelectorAll(".title");
+
+    paras.forEach((para) => {
+      gsap.fromTo(
+        para,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: para,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    });
+
+    titles.forEach((title) => {
+      gsap.fromTo(
+        title,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: title,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    });
+    return;
+  }
+
+  // Desktop: full SplitText character animations
   const paras: NodeListOf<ParaElement> = document.querySelectorAll(".para");
   const titles: NodeListOf<ParaElement> = document.querySelectorAll(".title");
 

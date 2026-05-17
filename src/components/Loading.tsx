@@ -23,12 +23,13 @@ const Loading = ({ percent }: { percent: number }) => {
     import("./utils/initialFX").then((module) => {
       if (isLoaded) {
         setClicked(true);
+        const delay = window.innerWidth <= 1024 ? 300 : 900; // Faster on mobile
         setTimeout(() => {
           if (module.initialFX) {
             module.initialFX();
           }
           setIsLoading(false);
-        }, 900);
+        }, delay);
       }
     });
   }, [isLoaded]);

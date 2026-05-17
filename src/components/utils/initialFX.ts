@@ -3,15 +3,54 @@ import gsap from "gsap";
 import { smoother } from "../Navbar";
 
 export function initialFX() {
+  const isMobile = window.innerWidth <= 1024;
+
   document.body.style.overflowY = "auto";
-  smoother.paused(false);
+
+  // Only unpause ScrollSmoother on desktop — it doesn't exist on mobile
+  if (!isMobile && smoother) {
+    smoother.paused(false);
+  }
+
   document.getElementsByTagName("main")[0].classList.add("main-active");
+
   gsap.to("body", {
     backgroundColor: "#0b080c",
     duration: 0.5,
     delay: 1,
   });
 
+  // Fade in nav, icons always (desktop + mobile)
+  gsap.fromTo(
+    [".header", ".icons-section", ".nav-fade"],
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1.2,
+      ease: "power1.inOut",
+      delay: 0.1,
+    }
+  );
+
+  // Hero text animations — simplified fade-in on mobile, full SplitText on desktop
+  if (isMobile) {
+    // Simple fade-in for mobile (SplitText can be buggy on small screens)
+    gsap.fromTo(
+      [".landing-intro h2", ".landing-intro h1", ".landing-info h3", ".landing-info h2", ".landing-info-h2"],
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.1,
+        delay: 0.3,
+      }
+    );
+    return; // Skip SplitText-based animations on mobile
+  }
+
+  // Desktop: full SplitText character animations
   var landingText = new SplitText(
     [".landing-info h3", ".landing-intro h2", ".landing-intro h1"],
     {
@@ -59,16 +98,6 @@ export function initialFX() {
       ease: "power1.inOut",
       y: 0,
       delay: 0.8,
-    }
-  );
-  gsap.fromTo(
-    [".header", ".icons-section", ".nav-fade"],
-    { opacity: 0 },
-    {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power1.inOut",
-      delay: 0.1,
     }
   );
 

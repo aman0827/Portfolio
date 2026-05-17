@@ -10,34 +10,41 @@ export let smoother: ScrollSmoother;
 
 const Navbar = () => {
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
+    const isMobile = window.innerWidth <= 1024;
 
-    smoother.scrollTop(0);
-    smoother.paused(true);
+    if (!isMobile) {
+      // Desktop only: initialize ScrollSmoother
+      smoother = ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 1.7,
+        speed: 1.7,
+        effects: true,
+        autoResize: true,
+        ignoreMobileResize: true,
+      });
 
-    let links = document.querySelectorAll(".header ul a");
-    links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
+      smoother.scrollTop(0);
+      smoother.paused(true);
+
+      let links = document.querySelectorAll(".header ul a");
+      links.forEach((elem) => {
+        let element = elem as HTMLAnchorElement;
+        element.addEventListener("click", (e) => {
           e.preventDefault();
           let elem = e.currentTarget as HTMLAnchorElement;
           let section = elem.getAttribute("data-href");
           smoother.scrollTo(section, true, "top top");
-        }
+        });
       });
-    });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
+
+      window.addEventListener("resize", () => {
+        ScrollSmoother.refresh(true);
+      });
+    } else {
+      // Mobile: use native scroll, no ScrollSmoother needed
+      document.body.style.overflowY = "auto";
+    }
   }, []);
 
   const toggleMenu = () => {
