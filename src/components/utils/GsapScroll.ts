@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
@@ -9,59 +12,61 @@ export function setCharTimeline(
   setInterval(() => {
     intensity = Math.random();
   }, 200);
-  const tl1 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".landing-section",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-  const tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".about-section",
-      start: "center 55%",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-  const tl3 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".whatIDO",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-  let screenLight: any, monitor: any;
-  character?.children.forEach((object: any) => {
-    if (object.name === "Plane004") {
-      object.children.forEach((child: any) => {
-        child.material.transparent = true;
-        child.material.opacity = 0;
-        if (child.material.name === "Material.027") {
-          monitor = child;
-          child.material.color.set("#FFFFFF");
-        }
-      });
-    }
-    if (object.name === "screenlight") {
-      object.material.transparent = true;
-      object.material.opacity = 0;
-      object.material.emissive.set("#C8BFFF");
-      gsap.timeline({ repeat: -1, repeatRefresh: true }).to(object.material, {
-        emissiveIntensity: () => intensity * 8,
-        duration: () => Math.random() * 0.6,
-        delay: () => Math.random() * 0.1,
-      });
-      screenLight = object;
-    }
-  });
-  let neckBone = character?.getObjectByName("spine005");
+
   if (window.innerWidth > 1024) {
+    // Desktop-only: build scroll timelines and traverse model materials
+    const tl1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".landing-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".about-section",
+        start: "center 55%",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+    const tl3 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".whatIDO",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+    let screenLight: any, monitor: any;
+    character?.children.forEach((object: any) => {
+      if (object.name === "Plane004") {
+        object.children.forEach((child: any) => {
+          child.material.transparent = true;
+          child.material.opacity = 0;
+          if (child.material.name === "Material.027") {
+            monitor = child;
+            child.material.color.set("#FFFFFF");
+          }
+        });
+      }
+      if (object.name === "screenlight") {
+        object.material.transparent = true;
+        object.material.opacity = 0;
+        object.material.emissive.set("#C8BFFF");
+        gsap.timeline({ repeat: -1, repeatRefresh: true }).to(object.material, {
+          emissiveIntensity: () => intensity * 8,
+          duration: () => Math.random() * 0.6,
+          delay: () => Math.random() * 0.1,
+        });
+        screenLight = object;
+      }
+    });
+    let neckBone = character?.getObjectByName("spine005");
     if (character) {
       tl1
         .fromTo(character.rotation, { y: 0 }, { y: 0.7, duration: 1 }, 0)
