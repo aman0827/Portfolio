@@ -356,23 +356,3 @@ h2.landing-info-h2 {
     font-size: 75px;
   }
 }
-@media screen and (max-width: 768px) {
-  .landing-info {
-    width: 100%;
-    text-align: center;
-    bottom: 20px;
-  }
-
-  .landing-info h2 {
-    font-size: 30px !important;
-    line-height: 32px !important;
-    flex-wrap: wrap !important;
-    margin-top: 0 !important;
-    margin-left: 0 !important;
-  }
-
-  h2.landing-info-h2 {
-    font-size: 35px !important;
-    width: auto !important;
-  }
-}
